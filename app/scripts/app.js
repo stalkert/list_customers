@@ -1,5 +1,6 @@
+;(function(){
 'use strict';
-
+$.material.init();
 /**
  * @ngdoc overview
  * @name listCustomersApp
@@ -11,21 +12,24 @@
 angular
   .module('listCustomersApp', [
     'ngCookies',
-    'ngRoute'
+    'ngRoute',
+    'firebase'
   ])
+  .constant('FIREBASE_URL','https://listcustomers.firebaseio.com/')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
+        templateUrl: 'views/home.html',
+        controller: 'HomeCtrl',
+        controllerAs: 'ctrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+      .when('/customers', {
+        templateUrl: 'views/customers.html',
+        controller: 'CustomersCtrl',
+        controllerAs: 'ctrl'
       })
       .otherwise({
         redirectTo: '/'
       });
   });
+})();
