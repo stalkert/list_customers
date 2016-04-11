@@ -1,60 +1,60 @@
-<form class="form-horizontal">
+<form class="form-horizontal" ng-submit="ctrl.addCustomer()">
   <fieldset>
     <legend>Add New Customer</legend>
     <div class="form-group">
       <label for="inputName" class="col-md-2 control-label">Name</label>
 
       <div class="col-md-10">
-        <input type="text" class="form-control" id="inputName" placeholder="Name">
+        <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="ctrl.customer.name" required>
       </div>
     </div>
     <div class="form-group">
       <label for="inputEmail" class="col-md-2 control-label">Email</label>
 
       <div class="col-md-10">
-        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+        <input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="ctrl.customer.email" required>
       </div>
     </div>
     <div class="form-group">
       <label for="inputTel" class="col-md-2 control-label">Tel</label>
 
       <div class="col-md-10">
-        <input type="tel" class="form-control" id="inputTel" placeholder="Tel">
+        <input type="tel" class="form-control" id="inputTel" placeholder="Tel" ng-model="ctrl.customer.tel" required>
       </div>
     </div>
     <div class="form-group">
-      <label for="inputAdress" class="col-md-2 control-label">Name</label>
+      <label for="inputAddress" class="col-md-2 control-label">Address</label>
 
       <div class="col-md-10">
-        <input type="text" class="form-control" id="inputAdress" placeholder="Adress">
+        <input type="text" class="form-control" id="inputAddress" placeholder="Address" ng-model="ctrl.customer.address" required>
       </div>
     </div>
     <div class="form-group">
       <label for="inputStreet" class="col-md-2 control-label">Street</label>
 
       <div class="col-md-10">
-        <input type="text" class="form-control" id="inputStreet" placeholder="Street">
+        <input type="text" class="form-control" id="inputStreet" placeholder="Street" ng-model="ctrl.customer.street" required>
       </div>
     </div>
     <div class="form-group">
       <label for="inputCity" class="col-md-2 control-label">City</label>
 
       <div class="col-md-10">
-        <input type="text" class="form-control" id="inputCity" placeholder="City">
+        <input type="text" class="form-control" id="inputCity" placeholder="City" ng-model="ctrl.customer.city" required>
       </div>
     </div>
     <div class="form-group">
       <label for="inputState" class="col-md-2 control-label">State</label>
 
       <div class="col-md-10">
-        <input type="text" class="form-control" id="inputState" placeholder="State">
+        <input type="text" class="form-control" id="inputState" placeholder="State" ng-model="ctrl.customer.state" required>
       </div>
     </div>
     <div class="form-group">
       <label for="inputZip" class="col-md-2 control-label">Zip</label>
 
       <div class="col-md-10">
-        <input type="number" class="form-control" id="inputZip" placeholder="Zip">
+        <input type="text" class="form-control" id="inputZip" placeholder="Zip" ng-model="ctrl.customer.zip" required>
       </div>
     </div>
 
@@ -62,8 +62,9 @@
 
     <div class="form-group">
       <div class="col-md-10 col-md-offset-2">
-        <button type="button" class="btn btn-default">Cancel</button>
-        <button type="submit" class="btn btn-primary">Add </button>
+        <button type="button" class="btn btn-default" ng-click="ctrl.clear();">Clear</button>
+        <button type="submit" class="btn btn-primary"  ng-hide="ctrl.customer.$id">Add customer </button>
+        <button type="button" class="btn btn-primary"  ng-show="ctrl.customer.$id" ng-click="ctrl.updateCustomer();">Save customer </button>
       </div>
     </div>
   </fieldset>
@@ -80,23 +81,27 @@
     <th>City</th>
     <th>State</th>
     <th>Zip</th>
+    <th>Update</th>
+    <th>Delete</th>
   </tr>
   </thead>
   <tbody>
 
-  <tr >
-    <th>1</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Tel</th>
-    <th>Address</th>
-    <th>Street</th>
-    <th>City</th>
-    <th>State</th>
-    <th>Zip</th>
+  <tr  ng-repeat="customer in ctrl.customers" >
+    <td>{{customer.$id}}</td>
+    <td>{{customer.name}}</td>
+    <td>{{customer.email}}</td>
+    <td>{{customer.tel}}</td>
+    <td>{{customer.address}}</td>
+    <td>{{customer.street}}</td>
+    <td>{{customer.city}}</td>
+    <td>{{customer.state}}</td>
+    <td>{{customer.zip}}</td>
+    <td ng-click="ctrl.setEdit(customer);"><i class="material-icons">create</i></td>
+    <td ng-click="ctrl.setEdit(customer);
+    ctrl.deleteCustomer(customer);
+    "><i class="material-icons">delete</i></td>
   </tr>
   </tbody>
 </table>
-<pre>
-  {{ctrl.dbArr | json}}
-</pre>
+

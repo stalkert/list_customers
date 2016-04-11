@@ -1,20 +1,42 @@
-;(function() {
+;
+(function () {
   'use strict';
 
-  /**
-   * @ngdoc function
-   * @name listCustomersApp.controller:AboutCtrl
-   * @description
-   * # AboutCtrl
-   * Controller of the listCustomersApp
-   */
   angular.module('listCustomersApp')
-    .controller('CustomersCtrl',['$firebaseArray','FIREBASE_URL', function ($firebaseArray,FIREBASE_URL) {
+    .controller('CustomersCtrl', ['CustomerFire','$rootScope', function (CustomerFire,$rootScope) {
+      $rootScope.customers = 'active';
+      $rootScope.home = '';
       var cs = this;
-      var ref = new Firebase(FIREBASE_URL);
-      var refArr = $firebaseArray(ref);
-      refArr.$loaded(function(){
-        cs.dbArr = refArr;
-      })
+      CustomerFire.getCustomers(function (data) {
+        cs.customers = data;
+      });
+      cs.customer = {
+        name: null,
+        email: null,
+        tel: null,
+        address: null,
+        street: null,
+        city: null,
+        state: null,
+        zip: null
+      };
+      cs.addCustomer = function () {
+        CustomerFire.addCustomer(cs.customer);
+        cs.customer = null;
+      };
+      cs.setEdit = function (customer) {
+        cs.customer = customer;
+      };
+      cs.updateCustomer = function () {
+        CustomerFire.updateCustomer(cs.customer);
+        cs.customer = null;
+      };
+      cs.clear = function () {
+        cs.customer = null;
+      };
+      cs.deleteCustomer =function(){
+        CustomerFire.deleteCustomer(cs.customer.$id);
+        cs.customer = null;
+      }
     }]);
 })();
